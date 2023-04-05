@@ -1,3 +1,5 @@
+-- COMMIT INICIAL
+
 -- Descomente e altere as linhas abaixo:
 
 -- DROP DATABASE IF EXISTS SpotifyClone;
