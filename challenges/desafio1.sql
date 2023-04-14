@@ -1,25 +1,33 @@
--- COMMIT INICIAL
+DROP DATABASE IF EXISTS SpotifyClone;
 
--- Descomente e altere as linhas abaixo:
+CREATE DATABASE IF NOT EXISTS SpotifyClone;
 
--- DROP DATABASE IF EXISTS SpotifyClone;
--- CREATE DATABASE IF NOT EXISTS SpotifyClone;
--- CREATE TABLE SpotifyClone.tabela1(
---     coluna1 tipo restricoes,
---     coluna2 tipo restricoes,
---     colunaN tipo restricoes,
--- ) engine = InnoDB;
--- CREATE TABLE SpotifyClone.tabela2(
---     coluna1 tipo restricoes,
---     coluna2 tipo restricoes,
---     colunaN tipo restricoes,
--- ) engine = InnoDB;
--- INSERT INTO SpotifyClone.tabela1 (coluna1, coluna2)
--- VALUES
---   ('exemplo de dados 1', 'exemplo de dados A'),
---   ('exemplo de dados 2', 'exemplo de dados B'),
---   ('exemplo de dados 3', 'exemplo de dados C');
--- INSERT INTO SpotifyClone.tabela2 (coluna1, coluna2)
--- VALUES
---   ('exemplo de dados 1', 'exemplo de dados X'),
---   ('exemplo de dados 2', 'exemplo de dados Y');
+CREATE TABLE SpotifyClone.plano (
+    plano_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_plano VARCHAR(32) NOT NULL,
+    valor_plano DECIMAL(5,2) NOT NULL,
+) engine = InnoDB;
+
+CREATE TABLE SpotifyClone.pessoa_artista (
+    pessoa_artista_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_pessoa_artista VARCHAR(32)
+) engine = InnoDB;
+
+INSERT INTO SpotifyClone.plano (
+    nome_plano,
+    valor_plano
+) VALUES
+    ('gratuito', 0),
+    ('universitário', 5.99),
+    ('pessoal', 6.99),
+    ('familiar', 7.99);
+
+INSERT INTO SpotifyClone.pessoa_artista (
+    nome_pessoa_artista
+) VALUES
+    ('Baco Exu do Blues'),
+    ('Beyoncé'),
+    ('Blind Guardian'),
+    ('Elis Regina')
+    ('Nina Simone')
+    ('Queen');
