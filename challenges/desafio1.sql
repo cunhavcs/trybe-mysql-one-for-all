@@ -25,6 +25,14 @@ CREATE TABLE pessoa_usuaria (
     FOREIGN KEY (plano_id) REFERENCES plano(plano_id)
 ) engine = InnoDB;
 
+CREATE TABLE seguindo_pessoa_artista (
+    seguindo_pessoa_artista_id INT PRIMARY KEY AUTO_INCREMENT,
+    pessoa_usuaria_id	INT NOT NULL,
+    pessoa_artista_id	INT NOT NULL,
+    FOREIGN KEY (pessoa_usuaria_id) REFERENCES pessoa_usuaria(pessoa_usuaria_id),
+    FOREIGN KEY (pessoa_artista_id) REFERENCES pessoa_artista(pessoa_artista_id)
+);
+
 INSERT INTO plano (
     nome_plano,
     valor_plano
@@ -50,7 +58,7 @@ INSERT INTO pessoa_usuaria (
     sobrenome_pessoa_usuaria,
     idade,
     plano_id,
-    data_assinatura,
+    data_assinatura
 ) VALUES
     ('Barbara', 'Liskov', 82, 1, '2019-10-20'),
     ('Robert', 'Cecil Martin', 58, 1, '2017-01-06'),
@@ -62,3 +70,23 @@ INSERT INTO pessoa_usuaria (
     ('Christopher', 'Alexander', 85, 3, '2019-06-05'),
     ('Judith', 'Butler', 45, 3, '2020-05-13'),
     ('Jorge', 'Amado', 58, 3, '2017-02-17');
+
+INSERT INTO seguindo_pessoa_artista (
+    seguindo_pessoa_artista_id,
+    pessoa_usuaria_id,
+    pessoa_artista_id
+) VALUES
+    ('1', '2'),
+    ('1', '6'),
+    ('1', '4'),
+    ('2', '2'),
+    ('2', '4'),
+    ('3', '6'),
+    ('4', '1'),
+    ('5', '3'),
+    ('5', '5'),
+    ('6', '5'),
+    ('6', '2'),
+    ('7', '5'),
+    ('9', '4'),
+    ('10', '6');
