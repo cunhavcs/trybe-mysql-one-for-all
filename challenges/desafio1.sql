@@ -41,6 +41,14 @@ CREATE TABLE album (
     FOREIGN KEY (pessoa_artista_id) REFERENCES pessoa_artista(pessoa_artista_id)
 );
 
+CREATE TABLE cancao (
+    cancao_id	INT PRIMARY KEY,
+    nome_cancao	VARCHAR(32) NOT NULL,
+    duracao_segundos_cancao	INT NOT NULL,
+    album_id VARCHAR(32) NOT NULL,
+    FOREIGN KEY (album_id) REFERENCES album(album_id)
+);
+
 INSERT INTO plano (
     nome_plano,
     valor_plano
@@ -113,3 +121,20 @@ INSERT INTO album (
     ('QVVJFA?', 1, 2003),
     ('Somewhere Far Beyond', 3, 2007),
     ('I Put A Spell On You', 5, 2012);
+
+INSERT INTO cancao (
+    cancao_id,
+    nome_cancao,
+    duracao_segundos_cancao,
+    album_id
+) VALUES
+    ("BREAK MY SOUL", 279, 1),
+    ("VIRGO'S GROOVE", 369, 1),
+    ("ALIEN SUPERSTAR", 118, 1),
+    ("Don't Stop Me Now", 203, 2),
+    ("Under Pressure", 152, 3),
+    ("Como Nossos Pais", 105, 4),
+    ("O Medo de Amar é o Medo de Ser Livre", 207, 5),
+    ("Samba em Paris", 267, 6),
+    ("The Bard's Song", 244, 7),
+    ("Feeling Good", 100, 8);
