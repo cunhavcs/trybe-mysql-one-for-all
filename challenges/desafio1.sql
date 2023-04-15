@@ -2,12 +2,12 @@ DROP DATABASE IF EXISTS SpotifyClone;
 
 CREATE DATABASE IF NOT EXISTS SpotifyClone;
 
-USE SpotifyClone
+USE SpotifyClone;
 
 CREATE TABLE plano (
     plano_id INT PRIMARY KEY AUTO_INCREMENT,
     nome_plano VARCHAR(32) NOT NULL,
-    valor_plano DECIMAL(5,2) NOT NULL,
+    valor_plano DECIMAL(5,2) NOT NULL
 ) engine = InnoDB;
 
 CREATE TABLE pessoa_artista (
@@ -26,12 +26,13 @@ CREATE TABLE pessoa_usuaria (
 ) engine = InnoDB;
 
 CREATE TABLE seguindo_pessoa_artista (
-    seguindo_pessoa_artista_id INT PRIMARY KEY AUTO_INCREMENT,
-    pessoa_usuaria_id	INT NOT NULL,
-    pessoa_artista_id	INT NOT NULL,
+    -- seguindo_pessoa_artista_id INT PRIMARY KEY AUTO_INCREMENT,
+    pessoa_usuaria_id INT NOT NULL,
+    pessoa_artista_id INT NOT NULL,
+    PRIMARY KEY (pessoa_usuaria_id, pessoa_artista_id),
     FOREIGN KEY (pessoa_usuaria_id) REFERENCES pessoa_usuaria(pessoa_usuaria_id),
     FOREIGN KEY (pessoa_artista_id) REFERENCES pessoa_artista(pessoa_artista_id)
-);
+) engine = InnoDB;
 
 CREATE TABLE album (
     album_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -39,24 +40,25 @@ CREATE TABLE album (
     pessoa_artista_id	INT NOT NULL,
     ano_lancamento_album INT NOT NULL,
     FOREIGN KEY (pessoa_artista_id) REFERENCES pessoa_artista(pessoa_artista_id)
-);
+) engine = InnoDB;
 
 CREATE TABLE cancao (
-    cancao_id	INT PRIMARY KEY,
-    nome_cancao	VARCHAR(32) NOT NULL,
+    cancao_id	INT PRIMARY KEY AUTO_INCREMENT,
+    nome_cancao	VARCHAR(64) NOT NULL,
     duracao_segundos_cancao	INT NOT NULL,
     album_id INT NOT NULL,
     FOREIGN KEY (album_id) REFERENCES album(album_id)
-);
+) engine = InnoDB;
 
 CREATE TABLE reproducao (
-    reproducao_id	INT PRIMARY KEY AUTO_INCREMENT,
+    -- reproducao_id	INT PRIMARY KEY AUTO_INCREMENT,
     pessoa_usuaria_id	INT NOT NULL,
     cancao_id	INT NOT NULL,
-    data_reproducao	DATE NOT NULL,
+    data_reproducao	DATETIME NOT NULL,
+    PRIMARY KEY (pessoa_usuaria_id, cancao_id),
     FOREIGN KEY (pessoa_usuaria_id) REFERENCES pessoa_usuaria(pessoa_usuaria_id),
     FOREIGN KEY (cancao_id) REFERENCES cancao(cancao_id)
-);
+) engine = InnoDB;
 
 INSERT INTO plano (
     nome_plano,
@@ -73,12 +75,11 @@ INSERT INTO pessoa_artista (
     ('Baco Exu do Blues'),
     ('Beyoncé'),
     ('Blind Guardian'),
-    ('Elis Regina')
-    ('Nina Simone')
+    ('Elis Regina'),
+    ('Nina Simone'),
     ('Queen');
 
 INSERT INTO pessoa_usuaria (
-    pessoa_usuaria_id,
     nome_pessoa_usuaria,
     sobrenome_pessoa_usuaria,
     idade,
@@ -97,7 +98,6 @@ INSERT INTO pessoa_usuaria (
     ('Jorge', 'Amado', 58, 3, '2017-02-17');
 
 INSERT INTO seguindo_pessoa_artista (
-    seguindo_pessoa_artista_id,
     pessoa_usuaria_id,
     pessoa_artista_id
 ) VALUES
@@ -117,7 +117,6 @@ INSERT INTO seguindo_pessoa_artista (
     (10, 6);
 
 INSERT INTO album (
-    album_id,
     nome_album,
     pessoa_artista_id,
     ano_lancamento_album
@@ -132,7 +131,6 @@ INSERT INTO album (
     ('I Put A Spell On You', 5, 2012);
 
 INSERT INTO cancao (
-    cancao_id,
     nome_cancao,
     duracao_segundos_cancao,
     album_id
@@ -149,7 +147,6 @@ INSERT INTO cancao (
     ("Feeling Good", 100, 8);
 
 INSERT INTO reproducao (
-    reproducao_id,
     pessoa_usuaria_id,
     cancao_id,
     data_reproducao
@@ -161,7 +158,7 @@ INSERT INTO reproducao (
     (2, 7, '2020-01-02 07:40:33'),
     (3, 10, '2020-11-13 16:55:13'),
     (3, 2, '2020-12-05 18:38:30'),
-    (4, 8, '2021-08-15 17:10:10; '),
+    (4, 8, '2021-08-15 17:10:10'),
     (5, 8, '2022-01-09 01:44:33'),
     (5, 5, '2020-08-06 15:23:43'),
     (6, 7, '2017-01-24 00:31:17'),
