@@ -4,25 +4,25 @@ CREATE DATABASE IF NOT EXISTS SpotifyClone;
 
 USE SpotifyClone;
 
-CREATE TABLE plano (
+CREATE TABLE planos (
     plano_id INT PRIMARY KEY AUTO_INCREMENT,
     nome_plano VARCHAR(32) NOT NULL,
     valor_plano DECIMAL(5,2) NOT NULL
 ) engine = InnoDB;
 
-CREATE TABLE pessoa_artista (
+CREATE TABLE pessoas_artistas (
     pessoa_artista_id INT PRIMARY KEY AUTO_INCREMENT,
     nome_pessoa_artista VARCHAR(32) NOT NULL
 ) engine = InnoDB;
 
-CREATE TABLE pessoa_usuaria (
+CREATE TABLE pessoas_usuarias (
     pessoa_usuaria_id INT PRIMARY KEY AUTO_INCREMENT,
     nome_pessoa_usuaria VARCHAR(32) NOT NULL,
     sobrenome_pessoa_usuaria VARCHAR(32) NOT NULL,
     idade INT NOT NULL,
     plano_id INT NOT NULL,
     data_assinatura DATE NOT NULL,
-    FOREIGN KEY (plano_id) REFERENCES plano(plano_id)
+    FOREIGN KEY (plano_id) REFERENCES planos(plano_id)
 ) engine = InnoDB;
 
 CREATE TABLE seguindo_pessoa_artista (
@@ -30,37 +30,37 @@ CREATE TABLE seguindo_pessoa_artista (
     pessoa_usuaria_id INT NOT NULL,
     pessoa_artista_id INT NOT NULL,
     PRIMARY KEY (pessoa_usuaria_id, pessoa_artista_id),
-    FOREIGN KEY (pessoa_usuaria_id) REFERENCES pessoa_usuaria(pessoa_usuaria_id),
-    FOREIGN KEY (pessoa_artista_id) REFERENCES pessoa_artista(pessoa_artista_id)
+    FOREIGN KEY (pessoa_usuaria_id) REFERENCES pessoas_usuarias(pessoa_usuaria_id),
+    FOREIGN KEY (pessoa_artista_id) REFERENCES pessoas_artistas(pessoa_artista_id)
 ) engine = InnoDB;
 
-CREATE TABLE album (
+CREATE TABLE albuns (
     album_id INT PRIMARY KEY AUTO_INCREMENT,
     nome_album VARCHAR(32) NOT NULL,
     pessoa_artista_id	INT NOT NULL,
     ano_lancamento_album INT NOT NULL,
-    FOREIGN KEY (pessoa_artista_id) REFERENCES pessoa_artista(pessoa_artista_id)
+    FOREIGN KEY (pessoa_artista_id) REFERENCES pessoas_artistas(pessoa_artista_id)
 ) engine = InnoDB;
 
-CREATE TABLE cancao (
+CREATE TABLE cancoes (
     cancao_id	INT PRIMARY KEY AUTO_INCREMENT,
     nome_cancao	VARCHAR(64) NOT NULL,
     duracao_segundos_cancao	INT NOT NULL,
     album_id INT NOT NULL,
-    FOREIGN KEY (album_id) REFERENCES album(album_id)
+    FOREIGN KEY (album_id) REFERENCES albuns(album_id)
 ) engine = InnoDB;
 
-CREATE TABLE reproducao (
+CREATE TABLE reproducoes (
     -- reproducao_id	INT PRIMARY KEY AUTO_INCREMENT,
     pessoa_usuaria_id	INT NOT NULL,
     cancao_id	INT NOT NULL,
     data_reproducao	DATETIME NOT NULL,
     PRIMARY KEY (pessoa_usuaria_id, cancao_id),
-    FOREIGN KEY (pessoa_usuaria_id) REFERENCES pessoa_usuaria(pessoa_usuaria_id),
-    FOREIGN KEY (cancao_id) REFERENCES cancao(cancao_id)
+    FOREIGN KEY (pessoa_usuaria_id) REFERENCES pessoas_usuarias(pessoa_usuaria_id),
+    FOREIGN KEY (cancao_id) REFERENCES cancoes(cancao_id)
 ) engine = InnoDB;
 
-INSERT INTO plano (
+INSERT INTO planos (
     nome_plano,
     valor_plano
 ) VALUES
@@ -69,7 +69,7 @@ INSERT INTO plano (
     ('pessoal', 6.99),
     ('familiar', 7.99);
 
-INSERT INTO pessoa_artista (
+INSERT INTO pessoas_artistas (
     nome_pessoa_artista
 ) VALUES
     ('Baco Exu do Blues'),
@@ -79,7 +79,7 @@ INSERT INTO pessoa_artista (
     ('Nina Simone'),
     ('Queen');
 
-INSERT INTO pessoa_usuaria (
+INSERT INTO pessoas_usuarias (
     nome_pessoa_usuaria,
     sobrenome_pessoa_usuaria,
     idade,
@@ -116,7 +116,7 @@ INSERT INTO seguindo_pessoa_artista (
     (9, 4),
     (10, 6);
 
-INSERT INTO album (
+INSERT INTO albuns (
     nome_album,
     pessoa_artista_id,
     ano_lancamento_album
@@ -130,7 +130,7 @@ INSERT INTO album (
     ('Somewhere Far Beyond', 3, 2007),
     ('I Put A Spell On You', 5, 2012);
 
-INSERT INTO cancao (
+INSERT INTO cancoes (
     nome_cancao,
     duracao_segundos_cancao,
     album_id
@@ -146,7 +146,7 @@ INSERT INTO cancao (
     ("The Bard's Song", 244, 7),
     ("Feeling Good", 100, 8);
 
-INSERT INTO reproducao (
+INSERT INTO reproducoes (
     pessoa_usuaria_id,
     cancao_id,
     data_reproducao
